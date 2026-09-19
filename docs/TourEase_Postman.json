@@ -1,0 +1,188 @@
+{
+  "info": {
+    "name": "TourEase AI API",
+    "description": "Complete API collection for TourEase AI — Smart India Hackathon 2024",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "BASE_URL", "value": "http://localhost:5000/api" },
+    { "key": "TOKEN", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": { "mode": "formdata", "formdata": [
+              { "key": "name", "value": "Test User", "type": "text" },
+              { "key": "email", "value": "test@example.com", "type": "text" },
+              { "key": "password", "value": "Test@12345", "type": "text" },
+              { "key": "role", "value": "tourist", "type": "text" }
+            ]},
+            "url": "{{BASE_URL}}/auth/signup"
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"admin@tourease.ai\",\n  \"password\": \"Admin@123456\"\n}" },
+            "url": "{{BASE_URL}}/auth/login"
+          }
+        },
+        {
+          "name": "Get Me",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": "{{BASE_URL}}/auth/me"
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"test@example.com\"\n}" },
+            "url": "{{BASE_URL}}/auth/forgot-password"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": "{{BASE_URL}}/auth/logout"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Hotels",
+      "item": [
+        {
+          "name": "Get All Hotels",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/hotels?page=1&limit=12&sort=rating", "query": [
+              { "key": "page", "value": "1" },
+              { "key": "limit", "value": "12" },
+              { "key": "sort", "value": "rating" }
+            ]}
+          }
+        },
+        {
+          "name": "Get Featured Hotels",
+          "request": { "method": "GET", "url": "{{BASE_URL}}/hotels/featured" }
+        },
+        {
+          "name": "Get Hotel by ID",
+          "request": { "method": "GET", "url": "{{BASE_URL}}/hotels/:id" }
+        },
+        {
+          "name": "Search Hotels by City",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{BASE_URL}}/hotels?city=Goa&minPrice=1000&maxPrice=20000", "query": [
+              { "key": "city", "value": "Goa" },
+              { "key": "minPrice", "value": "1000" },
+              { "key": "maxPrice", "value": "20000" }
+            ]}
+          }
+        },
+        {
+          "name": "Add Review",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"rating\": 5,\n  \"title\": \"Amazing experience!\",\n  \"comment\": \"Best hotel I've ever stayed in.\"\n}" },
+            "url": "{{BASE_URL}}/hotels/:id/reviews"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bookings",
+      "item": [
+        {
+          "name": "Create Booking",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"hotelId\": \"YOUR_HOTEL_ID\",\n  \"checkIn\": \"2024-12-20\",\n  \"checkOut\": \"2024-12-25\",\n  \"guests\": { \"adults\": 2, \"children\": 0 },\n  \"rooms\": 1\n}" },
+            "url": "{{BASE_URL}}/bookings"
+          }
+        },
+        {
+          "name": "My Bookings",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": "{{BASE_URL}}/bookings"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Trips",
+      "item": [
+        {
+          "name": "Generate AI Trip",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"destination\": \"Goa\",\n  \"days\": 5,\n  \"budget\": 25000,\n  \"interests\": [\"beach\", \"food\", \"adventure\"],\n  \"travelType\": \"couple\"\n}" },
+            "url": "{{BASE_URL}}/trips/ai-generate"
+          }
+        },
+        {
+          "name": "My Trips",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": "{{BASE_URL}}/trips"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Get Stats",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": "{{BASE_URL}}/admin/stats"
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": "{{BASE_URL}}/admin/users"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Destinations",
+      "item": [
+        {
+          "name": "Get Destinations",
+          "request": { "method": "GET", "url": "{{BASE_URL}}/destinations" }
+        },
+        {
+          "name": "Featured Destinations",
+          "request": { "method": "GET", "url": "{{BASE_URL}}/destinations?featured=true" }
+        }
+      ]
+    }
+  ]
+}

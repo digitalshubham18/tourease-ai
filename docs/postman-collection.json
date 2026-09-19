@@ -1,0 +1,65 @@
+{
+  "info": {
+    "name": "TourEase AI API",
+    "description": "Complete API collection for TourEase AI - Smart India Hackathon",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api" },
+    { "key": "token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        { "name": "Signup", "request": { "method": "POST", "header": [], "url": "{{baseUrl}}/auth/signup", "body": { "mode": "formdata", "formdata": [{"key":"name","value":"Test User","type":"text"},{"key":"email","value":"test@example.com","type":"text"},{"key":"password","value":"Test@1234","type":"text"},{"key":"role","value":"tourist","type":"text"}] } } },
+        { "name": "Login", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/auth/login", "body": { "mode": "raw", "raw": "{\"email\":\"admin@tourease.ai\",\"password\":\"Admin@123456\"}" } } },
+        { "name": "Get Me", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": "{{baseUrl}}/auth/me" } },
+        { "name": "Forgot Password", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/auth/forgot-password", "body": { "mode": "raw", "raw": "{\"email\":\"test@example.com\"}" } } },
+        { "name": "Logout", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": "{{baseUrl}}/auth/logout" } }
+      ]
+    },
+    {
+      "name": "Hotels",
+      "item": [
+        { "name": "Get All Hotels", "request": { "method": "GET", "url": "{{baseUrl}}/hotels?page=1&limit=12" } },
+        { "name": "Get Featured Hotels", "request": { "method": "GET", "url": "{{baseUrl}}/hotels/featured" } },
+        { "name": "Get Hotel by ID", "request": { "method": "GET", "url": "{{baseUrl}}/hotels/:id" } },
+        { "name": "Search Hotels", "request": { "method": "GET", "url": "{{baseUrl}}/hotels?city=Goa&minPrice=1000&maxPrice=20000&rating=4&sort=rating" } },
+        { "name": "Create Hotel", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": "{{baseUrl}}/hotels", "body": { "mode": "formdata", "formdata": [{"key":"name","value":"Test Hotel","type":"text"},{"key":"description","value":"A great hotel","type":"text"},{"key":"location[city]","value":"Goa","type":"text"},{"key":"location[state]","value":"Goa","type":"text"},{"key":"pricePerNight","value":"5000","type":"text"},{"key":"category","value":"standard","type":"text"}] } } },
+        { "name": "Add Review", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/hotels/:id/reviews", "body": { "mode": "raw", "raw": "{\"rating\":5,\"title\":\"Amazing stay!\",\"comment\":\"Loved everything about this hotel.\"}" } } }
+      ]
+    },
+    {
+      "name": "Bookings",
+      "item": [
+        { "name": "Create Booking", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/bookings", "body": { "mode": "raw", "raw": "{\"hotelId\":\"HOTEL_ID\",\"checkIn\":\"2024-03-15\",\"checkOut\":\"2024-03-18\",\"guests\":{\"adults\":2,\"children\":0},\"rooms\":1}" } } },
+        { "name": "Get My Bookings", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": "{{baseUrl}}/bookings" } },
+        { "name": "Cancel Booking", "request": { "method": "PUT", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/bookings/:id/cancel", "body": { "mode": "raw", "raw": "{\"reason\":\"Change of plans\"}" } } }
+      ]
+    },
+    {
+      "name": "Trips / AI Planner",
+      "item": [
+        { "name": "Generate AI Trip", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/trips/ai-generate", "body": { "mode": "raw", "raw": "{\"destination\":\"Goa\",\"days\":5,\"budget\":25000,\"interests\":[\"beach\",\"food\",\"adventure\"],\"travelType\":\"couple\"}" } } },
+        { "name": "Get My Trips", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": "{{baseUrl}}/trips" } }
+      ]
+    },
+    {
+      "name": "Destinations",
+      "item": [
+        { "name": "Get All Destinations", "request": { "method": "GET", "url": "{{baseUrl}}/destinations" } },
+        { "name": "Get Featured Destinations", "request": { "method": "GET", "url": "{{baseUrl}}/destinations?featured=true" } }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        { "name": "Get Stats", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": "{{baseUrl}}/admin/stats" } },
+        { "name": "Get All Users", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": "{{baseUrl}}/admin/users" } },
+        { "name": "Get All Hotels", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": "{{baseUrl}}/admin/hotels" } }
+      ]
+    }
+  ]
+}
