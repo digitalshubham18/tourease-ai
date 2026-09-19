@@ -112,7 +112,11 @@ export default function LoginPage() {
             No account? <Link to="/signup" className="text-indigo-400 font-semibold hover:text-indigo-300">Create one free</Link>
           </p>
 
-
+          {/* <div className="mt-6 p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20">
+            <p className="text-xs text-indigo-300 font-semibold mb-2">🔑 Demo Credentials</p>
+            <p className="text-xs text-slate-400">Admin: <span className="text-slate-300">admin@tourease.ai / Admin@123456</span></p>
+            <p className="text-xs text-slate-400">Owner: <span className="text-slate-300">owner@tourease.ai / Owner@123456</span></p>
+          </div> */}
         </motion.div>
       </div>
     </div>
